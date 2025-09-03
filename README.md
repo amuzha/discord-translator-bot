@@ -28,31 +28,28 @@ Bot ini memungkinkan Anda untuk:
 
 ## 🔧 Instalasi 🔧
 
-1. Clone repository:
+1. **Clone repository:**
 
    ```bash
    git clone https://github.com/amuzha/discord-translator-bot.git
    cd discord-translator-bot
    ```
 
-2. Install dependencies:
+2. **Install dependencies:**
 
    ```bash
    npm install
    ```
 
-3. Buat file `config.json`:
+3. **Buat file `.env`:**
+   Salin file `.env.example` dan ubah namanya menjadi `.env`:
 
-   ```json
-   {
-     "TOKEN": "DISCORD_BOT_TOKEN",
-     "PREFIX": "m!",
-     "GEMINI_API_KEY": "API_KEY_ANDA"
-     "OWNER=1234567890"
-   }
+   ```bash
+   cp .env.example .env   # untuk Linux/macOS
+   copy .env.example .env # untuk Windows
    ```
 
-4. Jalankan bot:
+4. **Jalankan bot:**
 
    ```bash
    node index.js
@@ -105,6 +102,7 @@ discord-translator-bot/
 ├── bot.js            # Command file
 ├── config.json       # Konfigurasi bot (ignored by git)
 ├── .env              # Environment
+├── .env.example      # Example Environment
 ├── .gitignore        # Ignore node_modules & config.json
 └── package.json
 ```
