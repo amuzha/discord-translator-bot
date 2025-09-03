@@ -1,0 +1,29 @@
+{
+  "name": "discord-announcer-bot",
+  "version": "1.0.0",
+  "description": "Bot Discord untuk translate dan announce otomatis menggunakan MyMemory API",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "translate",
+    "announcement"
+  ],
+  "author": "Amuzha",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.3.1",
+    "fs-extra": "^11.1.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
