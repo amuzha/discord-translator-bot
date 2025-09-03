@@ -31,7 +31,7 @@ Bot ini memungkinkan Anda untuk:
 1. Clone repository:
 
    ```bash
-   git clone https://github.com/username/discord-translator-bot.git
+   git clone https://github.com/amuzha/discord-translator-bot.git
    cd discord-translator-bot
    ```
 
