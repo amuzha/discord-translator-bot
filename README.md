@@ -1,7 +1,3 @@
-Berikut adalah contoh **README.md** yang lengkap, rapi, dan sesuai dengan proyek bot Discord kamu (translator & announcement bot):
-
----
-
 # 📢 Discord Translator & Announcement Bot 📢
 
 Bot ini memungkinkan Anda untuk:
