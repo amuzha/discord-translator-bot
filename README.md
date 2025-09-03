@@ -1,9 +1,9 @@
 # 📢 Discord Translator & Announcement Bot 📢
 
 Bot ini memungkinkan Anda untuk:
-✅ Mengirim pengumuman (announcement) ke channel tertentu
-✅ Menerjemahkan teks ke berbagai bahasa menggunakan **Gemini AI**
-✅ Memiliki sistem command dengan prefix (contoh: `m!`)
+✅ Mengirim pengumuman (announcement) ke channel tertentu <br>
+✅ Menerjemahkan teks ke berbagai bahasa menggunakan **Gemini AI** <br>
+✅ Memiliki sistem command dengan prefix (contoh: `m!`) <br>
 
 ---
 
@@ -48,6 +48,7 @@ Bot ini memungkinkan Anda untuk:
      "TOKEN": "DISCORD_BOT_TOKEN",
      "PREFIX": "m!",
      "GEMINI_API_KEY": "API_KEY_ANDA"
+     "OWNER=1234567890"
    }
    ```
 
@@ -61,13 +62,38 @@ Bot ini memungkinkan Anda untuk:
 
 ## 🛠️ Command List 🛠️
 
-| Command                     | Deskripsi                                    |                                      |
-| --------------------------- | -------------------------------------------- | ------------------------------------ |
-| `m!translate <lang> <teks>` | Terjemahkan teks ke bahasa yang dipilih      |                                      |
-| `m!translate <teks>`        | Jika tanpa `<lang>`, bot pilih bahasa random |                                      |
-| \`m!sendto <#channel        | id> <lang> <teks>\`                          | Kirim pengumuman ke channel tertentu |
-| `m!addowner <id>`           | Tambahkan owner bot                          |                                      |
-| `m!removeowner <id>`        | Hapus owner bot                              |                                      |
+### 📢 **ANNOUNCEMENT**
+
+| Command                             | Deskripsi                                   |
+| ----------------------------------- | ------------------------------------------- |
+| `m!announce <teks>`                 | Kirim pengumuman ke semua channel terdaftar |
+| `m!announce-test <teks>`            | Uji pengumuman tanpa mengirim ke channel    |
+| `m!sendto <lang> <#channel> <teks>` | Kirim pengumuman ke channel tertentu        |
+
+### 🌍 **LANG & CHANNEL**
+
+| Command                                 | Deskripsi                          |
+| --------------------------------------- | ---------------------------------- |
+| `m!addlang <lang> <emoji_flag> <judul>` | Tambahkan bahasa baru              |
+| `m!setchannel <lang> <#channel>`        | Set channel untuk bahasa tertentu  |
+| `m!removechannel <lang> <#channel>`     | Hapus channel dari bahasa tertentu |
+| `m!listchannels`                        | Tampilkan semua bahasa dan channel |
+
+### 🛠 **TOOLS**
+
+| Command                     | Deskripsi                               |
+| --------------------------- | --------------------------------------- |
+| `m!translate <lang> <teks>` | Terjemahkan teks ke bahasa yang dipilih |
+| `m!ping`                    | Tes koneksi bot (ping)                  |
+
+### 🔑 **OWNER**
+
+| Command                      | Deskripsi                        |
+| ---------------------------- | -------------------------------- |
+| `m!addowner <discord_id>`    | Tambahkan owner bot              |
+| `m!removeowner <discord_id>` | Hapus owner bot                  |
+| `m!setprefix`                | Ganti prefix bot (hanya info)    |
+| `m!creator`                  | Tampilkan pembuat atau owner bot |
 
 ---
 
@@ -76,9 +102,9 @@ Bot ini memungkinkan Anda untuk:
 ```
 discord-translator-bot/
 ├── index.js          # Main file
-├── commands/         # Folder untuk command
-├── utils/            # Utility (translate, Gemini API)
+├── bot.js            # Command file
 ├── config.json       # Konfigurasi bot (ignored by git)
+├── .env              # Environment
 ├── .gitignore        # Ignore node_modules & config.json
 └── package.json
 ```
