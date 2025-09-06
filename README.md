@@ -1,133 +1,180 @@
-# 📢 Discord Translator & Announcement Bot 📢
+````markdown
+# 📢 Discord Translator & Announcement Bot Premium 📢
 
-Bot ini memungkinkan Anda untuk:
-✅ Mengirim pengumuman (announcement) ke channel tertentu <br>
-✅ Menerjemahkan teks ke berbagai bahasa menggunakan **Gemini AI** <br>
-✅ Memiliki sistem command dengan prefix (contoh: `m!`) <br>
-
----
-
-## 🚀 Fitur Utama 🚀
-
-* **Translate Command**
-  Terjemahkan teks ke bahasa tertentu atau secara acak jika tidak ada kode bahasa yang diberikan.
-* **SendTo Command**
-  Kirim pengumuman ke channel tertentu dengan terjemahan otomatis.
-* **Owner System**
-  Tambahkan atau hapus owner dengan command khusus.
+Bot Discord canggih untuk **translate otomatis**, **announcement multi-bahasa**, dan **moderasi server**.  
+Mendukung **slash commands** dan **prefix commands**, serta sistem fallback multi-translator.
 
 ---
 
-## 📦 Persyaratan 📦
+## 🚀 Fitur Utama
 
-* **Node.js** v16+
-* **Discord.js** v14
-* API Key untuk **Gemini AI**
+### 📢 Announcement System
+- Kirim pengumuman ke seluruh channel bahasa dengan auto-translate.
+- Pilihan mention: `@everyone`, `@here`, role tertentu, atau tanpa mention.
+- Input teks pengumuman via modal.
+- Timeout otomatis (dibatalkan jika user tidak memilih dalam 10–20 detik).
+- Proteksi: hanya user yang membuka menu yang bisa memilih.
+
+### 🌐 Multi-Translator Fallback System
+- **Gemini API** (rotasi hingga 3 API key).
+- **Google Translate** via `@vitalets/google-translate-api`.
+- **MyMemory API** sebagai fallback terakhir.
+- Logging error Gemini hanya muncul sekali per key saat quota exceeded.
+
+### 🛠️ Channel Management
+- `/setchannel` / `m!setchannel` → Tambahkan channel untuk bahasa tertentu.
+- `/removechannel` / `m!removechannel` → Hapus channel dari bahasa tertentu.
+- Kedua command menggunakan UI select menu dengan timeout & proteksi user.
+
+### 📋 Utility Commands
+- `m!listchannels` → Menampilkan daftar mapping channel per bahasa.
+- `m!setlang` → Menyetel bahasa guild.
+- `m!translate` → Translate manual teks ke bahasa tertentu.
+- Command dasar: `m!ping`, `m!help`, dll.
+
+### 🛡️ Moderation Commands
+- `/kick @user [reason]` / `m!kick @user [reason]` → Kick member dari server.
+- `/ban @user [reason]` / `m!ban @user [reason]` → Ban member dari server.
+- `/warn @user [reason]` / `m!warn @user [reason]` → Beri peringatan ke member.
+- `/giverole @user <role>` / `m!giverole` → Beri role ke member.
+- `/removerole @user <role>` / `m!removerole` → Hapus role dari member.
+
+### 🔐 Owner & Permission System
+- Hanya admin/owner yang bisa menjalankan command sensitif (`announce`, `setchannel`, `removechannel`, moderasi, dll).
+- Kelola owner dengan `m!addowner` dan `m!removeowner`.
+
+### 🔄 Auto-Reload Commands
+- File di `/commands` langsung reload tanpa restart bot.
+- **Tidak auto-deploy slash ke API** (manual deploy tersedia).
+
+### 🚀 Manual Deploy System
+- `npm run deploy` → pilih:
+  - **Guild Deploy** (instan muncul).
+  - **Global Deploy** (±1 jam sinkronisasi).
 
 ---
 
-## 🔧 Instalasi 🔧
+## 📦 Persyaratan
 
-1. **Clone repository:**
+- **Node.js** v16+
+- **Discord.js** v14
+- API Key untuk **Gemini AI** (opsional, tapi direkomendasikan)
 
+---
+
+## 🔧 Instalasi
+
+1. **Clone repository**
    ```bash
    git clone https://github.com/amuzha/discord-translator-bot.git
    cd discord-translator-bot
-   ```
+````
 
-2. **Install dependencies:**
+2. **Install dependencies**
 
    ```bash
    npm install
    ```
 
-3. **Buat file `.env`:**
-   Salin file `.env.example` dan ubah namanya menjadi `.env`:
+3. **Buat file `.env`**
+   Salin `.env.example` menjadi `.env` lalu isi token:
 
    ```bash
-   cp .env.example .env   # untuk Linux/macOS
-   copy .env.example .env # untuk Windows
+   cp .env.example .env   # Linux/macOS
+   copy .env.example .env # Windows
    ```
 
-4. **Jalankan bot:**
+4. **Jalankan bot**
 
    ```bash
-   node index.js
+   npm start
+   ```
+
+   deploy / register slash command
+
+   ```bash
+   npm deploy
    ```
 
 ---
 
-## 🛠️ Command List 🛠️
+## 🛠️ Command List
 
-### 📢 **ANNOUNCEMENT**
+### 📢 Announcement
 
-| Command                             | Deskripsi                                   |
-| ----------------------------------- | ------------------------------------------- |
-| `m!announce <teks>`                 | Kirim pengumuman ke semua channel terdaftar |
-| `m!announce-test <teks>`            | Uji pengumuman tanpa mengirim ke channel    |
-| `m!sendto <lang> <#channel> <teks>` | Kirim pengumuman ke channel tertentu        |
+| Command                    | Deskripsi                                   |
+| -------------------------- | ------------------------------------------- |
+| `/announce` / `m!announce` | Kirim pengumuman ke semua channel terdaftar |
+| `m!announce-test`          | Uji pengumuman tanpa kirim ke channel       |
+| `/sendto` / `m!sendto`     | Kirim pengumuman ke channel tertentu        |
 
-### 🌍 **LANG & CHANNEL**
+### 🌍 Language & Channel
 
-| Command                                 | Deskripsi                          |
-| --------------------------------------- | ---------------------------------- |
-| `m!addlang <lang> <emoji_flag> <judul>` | Tambahkan bahasa baru              |
-| `m!setchannel <lang> <#channel>`        | Set channel untuk bahasa tertentu  |
-| `m!removechannel <lang> <#channel>`     | Hapus channel dari bahasa tertentu |
-| `m!listchannels`                        | Tampilkan semua bahasa dan channel |
+| Command                  | Deskripsi                               |
+| ------------------------ | --------------------------------------- |
+| `/setlang` / `m!setlang` | Set bahasa utama guild                  |
+| `/setchannel`            | Tambahkan channel untuk bahasa tertentu |
+| `/removechannel`         | Hapus channel dari bahasa tertentu      |
+| `m!listchannels`         | Lihat daftar bahasa & channel           |
 
-### 🛠 **TOOLS**
+### 🔧 Tools
 
-| Command                     | Deskripsi                               |
-| --------------------------- | --------------------------------------- |
-| `m!translate <lang> <teks>` | Terjemahkan teks ke bahasa yang dipilih |
-| `m!ping`                    | Tes koneksi bot (ping)                  |
+| Command                     | Deskripsi                           |
+| --------------------------- | ----------------------------------- |
+| `m!translate <lang> <teks>` | Translate manual ke bahasa tertentu |
+| `m!ping`                    | Tes koneksi bot                     |
+| `m!help`                    | Lihat semua command                 |
 
-### 🔑 **OWNER**
+### 🛡️ Moderation
 
-| Command                      | Deskripsi                        |
-| ---------------------------- | -------------------------------- |
-| `m!addowner <discord_id>`    | Tambahkan owner bot              |
-| `m!removeowner <discord_id>` | Hapus owner bot                  |
-| `m!setprefix`                | Ganti prefix bot (hanya info)    |
-| `m!creator`                  | Tampilkan pembuat atau owner bot |
+| Command                                     | Deskripsi                 |
+| ------------------------------------------- | ------------------------- |
+| `/kick @user [reason]` / `m!kick`           | Kick member dari server   |
+| `/ban @user [reason]` / `m!ban`             | Ban member dari server    |
+| `/warn @user [reason]` / `m!warn`           | Beri peringatan ke member |
+| `/giverole @user <role>` / `m!giverole`     | Tambahkan role ke member  |
+| `/removerole @user <role>` / `m!removerole` | Hapus role dari member    |
+
+### 🔑 Owner
+
+| Command              | Deskripsi        |
+| -------------------- | ---------------- |
+| `m!addowner <id>`    | Tambah owner bot |
+| `m!removeowner <id>` | Hapus owner bot  |
+| `m!creator`          | Info pembuat bot |
 
 ---
 
-## 🗂️ Struktur Proyek 🗂️
+## 🗂️ Struktur Proyek
 
 ```
 discord-translator-bot/
-├── index.js          # Main file
-├── bot.js            # Command file
-├── config.json       # Konfigurasi bot (ignored by git)
-├── .env              # Environment
-├── .env.example      # Example Environment
-├── .gitignore        # Ignore node_modules & config.json
+├── commands/        # Semua command (prefix & slash)
+├── utils/           # Helper, database, logger, translate API
+├── test/            # Command & utils untuk testing
+├── index.js         # Main bot starter
+├── deploy.js        # Manual deploy guild/global
+├── .env             # Token & konfigurasi
 └── package.json
 ```
 
 ---
 
-## 🔐 Konfigurasi .gitignore 🔐
+## 🌐 API Gemini
 
-Pastikan file `config.json` dan `node_modules` tidak ikut di-push ke GitHub:
-
-```
-node_modules/
-config.json
-.env
-```
-
----
-
-## 🌐 API Gemini 🌐
-
-Gunakan Gemini API untuk terjemahan otomatis.
+Gunakan **Google Gemini API** untuk translate otomatis.
 Dokumentasi resmi: [Google AI Gemini](https://ai.google.dev/)
 
 ---
 
-## ✅ Lisensi ✅
+## ✅ Lisensi
 
 Proyek ini menggunakan lisensi **MIT**.
+
+---
+
+## 📜 Changelog
+
+Lihat [CHANGELOG.md](./CHANGELOG.md) untuk daftar perubahan versi.
+
+```
