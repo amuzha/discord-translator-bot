@@ -1,4 +1,3 @@
-````markdown
 # 📢 Discord Translator & Announcement Bot Premium 📢
 
 Bot Discord canggih untuk **translate otomatis**, **announcement multi-bahasa**, dan **moderasi server**.  
