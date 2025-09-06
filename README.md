@@ -67,7 +67,7 @@ Mendukung **slash commands** dan **prefix commands**, serta sistem fallback mult
    ```bash
    git clone https://github.com/amuzha/discord-translator-bot.git
    cd discord-translator-bot
-````
+   ```
 
 2. **Install dependencies**
 
