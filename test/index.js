@@ -10,6 +10,8 @@ const __dirname = path.dirname(__filename);
 
 loadConfig();
 
+const isRealToken = config.token && config.token !== 'dummy-token-for-testing';
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -39,22 +41,6 @@ async function loadCommands() {
 
 await loadCommands();
 
-fs.watch(commandsPath, async (eventType, filename) => {
-  if (!filename || !filename.endsWith('.js')) return;
-  try {
-    const mod = await import(`./commands/${filename}?v=${Date.now()}`);
-    const commandModule = mod.default || mod;
-    if (validCmd(commandModule)) {
-      commands.set(commandModule.name, commandModule);
-      console.log(`🔄 Reloaded TEST command: ${commandModule.name}`);
-    }
-  } catch (e) {
-    console.error('Command reload error (TEST):', e);
-  }
-});
-
-const db = loadDB();
-
 client.on('messageCreate', async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(config.prefix)) return;
@@ -68,7 +54,7 @@ client.on('messageCreate', async message => {
   if (!cmd) return;
 
   try {
-    await cmd.execute(message, args, client, commands, db, config);
+    await cmd.execute(message, args, client, commands, loadDB(), config);
     addUser({ id: message.author.id, username: message.author.username });
   } catch (err) {
     console.error('❌ Error executing TEST command:', err);
@@ -76,12 +62,41 @@ client.on('messageCreate', async message => {
   }
 });
 
-client.once('ready', () => {
+const db = loadDB();
+
+if (isRealToken) {
+  client.once('ready', () => {
+    console.log(`💻 AMUZHA 💻`);
+    console.log(`Visit my website muzhaffar.my.id`);
+    console.log(`✅ TEST bot is active as ${client.user.tag}`);
+    console.log('📊 Mock DB:', db);
+
+    setTimeout(() => {
+      console.log('✅ Test completed — shutting down bot...');
+      client.destroy().then(() => {
+        console.log('✅ Bot destroyed — exiting process.');
+        process.exit(0);
+      }).catch(err => {
+        console.error('❌ Error destroying client:', err);
+        process.exit(1);
+      });
+    }, 3000);
+  });
+
+  client.login(config.token)
+    .catch(err => {
+      console.error('❌ Failed to login TEST:', err);
+      process.exit(1);
+    });
+} else {
   console.log(`💻 AMUZHA 💻`);
   console.log(`Visit my website muzhaffar.my.id`);
-  console.log(`✅ TEST bot is active as ${client.user.tag}`);
+  console.log(`⚠️ TEST mode: Using dummy token — bot will not login.`);
   console.log('📊 Mock DB:', db);
-});
+  console.log('✅ All TEST commands loaded successfully.');
 
-client.login(config.token)
-  .catch(err => console.error('❌ Failed to login TEST:', err));
+  setTimeout(() => {
+    console.log('✅ Test completed — exiting...');
+    process.exit(0);
+  }, 1000);
+}
